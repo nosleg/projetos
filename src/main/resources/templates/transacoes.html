@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transações</title>
+</head>
+<body>
+    <h1>Transações</h1>
+    <form th:action="@{/contas/creditar}" method="post">
+        <label for="numeroConta">Número da Conta:</label>
+        <input type="text" id="numeroConta" name="numeroConta" required>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+        <button type="submit">Creditar</button>
+    </form>
+
+    <form th:action="@{/contas/debitar}" method="post">
+        <label for="numeroConta">Número da Conta:</label>
+        <input type="text" id="numeroConta" name="numeroConta" required>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+        <button type="submit">Debitar</button>
+    </form>
+
+    <form th:action="@{/contas/transferir}" method="post">
+        <label for="contaOrigem">Conta Origem:</label>
+        <input type="text" id="contaOrigem" name="contaOrigem" required>
+        <label for="contaDestino">Conta Destino:</label>
+        <input type="text" id="contaDestino" name="contaDestino" required>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
+        <button type="submit">Transferir</button>
+    </form>
+</body>
+</html>

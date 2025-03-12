@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Criar Conta</title>
+</head>
+<body>
+    <h1>Criar Conta</h1>
+    <form th:action="@{/contas/criar}" method="post">
+        <label for="numero">Número da Conta:</label>
+        <input type="text" id="numero" name="numero" required>
+        <button type="submit">Criar</button>
+    </form>
+</body>
+</html>
