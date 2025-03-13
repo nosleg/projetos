@@ -37,7 +37,7 @@ public class TransacaoController {
             return "redirect:/login";
         }
 
-		// Busca o histórico de transações da conta do usuário logado
+		
         List<Transacao> transacoes = transacaoRepository.findByContaNumero(usuarioLogado.getConta().getNumero());
         model.addAttribute("transacoes", transacoes);
 
@@ -52,13 +52,13 @@ public class TransacaoController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         try {
-            // Validação do valor
+            
             if (valor.compareTo(BigDecimal.ZERO) <= 0) {
                 redirectAttributes.addFlashAttribute("erro", "O valor deve ser positivo.");
                 return "redirect:/contas/transacoes";
             }
 
-            // Restante da lógica de crédito
+           
             Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
             if (usuarioLogado == null) {
                 return "redirect:/login";
@@ -83,22 +83,22 @@ public class TransacaoController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         try {
-            // Verifica se o usuário está logado
+           
             Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
             if (usuarioLogado == null) {
                 return "redirect:/login";
             }
 
-            // Verifica se a conta pertence ao usuário logado
+            
             if (!usuarioLogado.getConta().getNumero().equals(numeroConta)) {
                 redirectAttributes.addFlashAttribute("erro", "Você só pode debitar da sua própria conta.");
                 return "redirect:/contas/transacoes";
             }
 
-            // Realiza o débito
+            
             contaService.debitar(numeroConta, valor);
 
-            // Atualiza o usuário logado na sessão com os dados mais recentes do banco de dados
+            
             usuarioLogado = contaService.atualizarUsuarioLogado(usuarioLogado);
             session.setAttribute("usuarioLogado", usuarioLogado);
 
@@ -117,22 +117,22 @@ public class TransacaoController {
             HttpSession session,
             RedirectAttributes redirectAttributes) {
         try {
-            // Verifica se o usuário está logado
+            
             Usuario usuarioLogado = (Usuario) session.getAttribute("usuarioLogado");
             if (usuarioLogado == null) {
                 return "redirect:/login";
             }
 
-            // Verifica se a conta de origem pertence ao usuário logado
+            
             if (!usuarioLogado.getConta().getNumero().equals(contaOrigem)) {
                 redirectAttributes.addFlashAttribute("erro", "Você só pode transferir da sua própria conta.");
                 return "redirect:/contas/transacoes";
             }
 
-            // Realiza a transferência
+            
             contaService.transferir(contaOrigem, contaDestino, valor);
 
-            // Atualiza o usuário logado na sessão com os dados mais recentes do banco de dados
+            
             usuarioLogado = contaService.atualizarUsuarioLogado(usuarioLogado);
             session.setAttribute("usuarioLogado", usuarioLogado);
 

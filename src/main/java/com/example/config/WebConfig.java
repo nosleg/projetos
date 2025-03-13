@@ -14,8 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // Registra o interceptor e define os padrões de URL que ele deve interceptar
+        
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/contas/**"); // Intercepta todas as rotas que começam com /contas/
+                .addPathPatterns("/contas/**"); 
     }
 }

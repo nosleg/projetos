@@ -24,7 +24,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String mostrarLogin() {
-        return "login"; // Retorna a tela de login
+        return "login"; 
     }
 
     @PostMapping("/login")
@@ -34,38 +34,38 @@ public class LoginController {
             HttpSession session,
             Model model
     ) {
-        // Busca o usuário no banco de dados pelo email
+        
         Usuario usuario = usuarioRepository.findByEmail(email);
 
         if (usuario == null) {
-            // Usuário não existe
+            
             model.addAttribute("error", "Usuário não existe.");
-            return "login"; // Volta para a tela de login com mensagem de erro
+            return "login"; 
         }
 
         if (!usuario.getSenha().equals(senha)) {
-            // Senha incorreta
+            
             model.addAttribute("error", "Senha incorreta.");
-            return "login"; // Volta para a tela de login com mensagem de erro
+            return "login"; 
         }
 
-        // Autenticação bem-sucedida
+        
         session.setAttribute("usuarioLogado", usuario);
-        session.setAttribute("email", usuario.getEmail()); // Armazena o email na sessão
-        session.setAttribute("tipo", usuario.getTipo()); // Armazena o tipo de usuário na sessão
+        session.setAttribute("email", usuario.getEmail()); 
+        session.setAttribute("tipo", usuario.getTipo()); 
 
-        // Redireciona com base no tipo de usuário
+        
         if ("ADMIN".equals(usuario.getTipo())) {
-            return "redirect:/contas/criar"; // Redireciona para a tela de criar conta
+            return "redirect:/contas/criar"; 
         } else {
-            return "redirect:/contas/transacoes"; // Redireciona para a tela de transações
+            return "redirect:/contas/transacoes"; 
         }
     }
     @GetMapping("/logout")
     public String fazerLogout(HttpSession session) {
-        session.removeAttribute("usuarioLogado"); // Remove o usuário da sessão
-        session.removeAttribute("email"); // Remove o email da sessão
-        session.removeAttribute("tipo"); // Remove o tipo de usuário da sessão
-        return "redirect:/login"; // Redireciona para a tela de login
+        session.removeAttribute("usuarioLogado"); 
+        session.removeAttribute("email"); 
+        session.removeAttribute("tipo"); 
+        return "redirect:/login"; 
     }
 }
