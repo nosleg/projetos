@@ -1,14 +1,138 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Criar Conta</title>
+    <meta charset="UTF-8">
+    <title>Criar Usuário e Conta</title>
+    <style>
+        .menu {
+            margin-bottom: 20px;
+        }
+        .menu a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        .mensagem {
+            color: green;
+            margin-bottom: 20px;
+        }
+        .erro {
+            color: red;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            margin-top: 10px;
+        }
+        form input, form select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
-    <h1>Criar Conta</h1>
+    <!-- Menu de navegação -->
+    <div class="menu">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+
+    <!-- Conteúdo da página -->
+    <h1>Criar Usuário e Conta</h1>
+
+    <!-- Mensagens de feedback -->
+    <div th:if="${mensagem}" class="mensagem">
+        <p th:text="${mensagem}"></p>
+    </div>
+    <div th:if="${erro}" class="erro">
+        <p th:text="${erro}"></p>
+    </div>
+
+    <!-- Formulário para criar usuário e conta -->
     <form th:action="@{/contas/criar}" method="post">
-        <label for="numero">Número da Conta:</label>
-        <input type="text" id="numero" name="numero" required>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" placeholder="Digite o nome completo" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Digite o email" required>
+
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="CLIENTE" selected>CLIENTE</option>
+            <option value="ADMIN">ADMIN</option>
+        </select>
+
+        <label for="numeroConta">Número da Conta:</label>
+        <input type="text" id="numeroConta" name="numeroConta" placeholder="Digite o número da conta" required>
+
         <button type="submit">Criar</button>
     </form>
+
+    <!-- Tabela de usuários -->
+    <h2>Usuários Cadastrados</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Conta</th>
+                <th>Saldo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.nome}"></td>
+                <td th:text="${usuario.email}"></td>
+                <td th:text="${usuario.conta != null} ? ${usuario.conta.numero} : 'N/A'"></td>
+                <td th:text="${usuario.conta != null} ? ${#numbers.formatDecimal(usuario.conta.saldo, 2, 2)} : 'N/A'"></td>
+                <td>
+                    <form th:action="@{/contas/excluir/{id}(id=${usuario.id})}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

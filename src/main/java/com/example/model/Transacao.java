@@ -8,55 +8,65 @@ import com.example.model.Conta;
 @Entity
 public class Transacao {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "conta_id", nullable = false)
-    private Conta conta;
+	private String tipo; // "CREDITO", "DEBITO", "TRANSFERENCIA"
+	private BigDecimal valor;
+	private LocalDateTime data;
+	private String descricao; 
 
-    private BigDecimal valor;
-    private String tipo; // "CREDITO", "DEBITO", "TRANSFERENCIA"
-    private LocalDateTime data = LocalDateTime.now();
+	@ManyToOne
+	@JoinColumn(name = "conta_id")
+	private Conta conta;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Conta getConta() {
-        return conta;
-    }
+	public String getTipo() {
+		return tipo;
+	}
 
-    public void setConta(Conta conta) {
-        this.conta = conta;
-    }
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 
-    public BigDecimal getValor() {
-        return valor;
-    }
+	public BigDecimal getValor() {
+		return valor;
+	}
 
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
-    }
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
 
-    public LocalDateTime getData() {
-        return data;
-    }
+	public LocalDateTime getData() {
+		return data;
+	}
 
-    public void setData(LocalDateTime data) {
-        this.data = data;
-    }
+	public void setData(LocalDateTime data) {
+		this.data = data;
+	}
 
-    public String getTipo() {
-        return tipo;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
 }

@@ -3,9 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Sistema Bancário</title>
+    <!-- Adicionando um pouco de estilo para o menu e a tabela -->
+    <style>
+        .menu {
+            margin-bottom: 20px;
+        }
+        .menu a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
+    <!-- Menu de navegação -->
+    <div class="menu">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/contas/criar}">Criar Conta</a>
+        <a th:href="@{/contas/transacoes}">Transações</a>
+    </div>
+
+    <!-- Conteúdo da página -->
     <h1 th:text="${mensagem}">Mensagem padrão</h1>
-    <p>Este é um exemplo de página usando Thymeleaf.</p>
+    <p>Aplicação simples para apresentação.</p>
+
+    <!-- Tabela de contas -->
+    <h2>Lista de Contas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Número</th>
+                <th>Saldo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="conta : ${contas}">
+                <td th:text="${conta.id}">ID</td>
+                <td th:text="${conta.numero}">Número</td>
+                <td th:text="${conta.saldo}">Saldo</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

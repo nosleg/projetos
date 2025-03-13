@@ -12,11 +12,6 @@ public class BancoApplication {
         SpringApplication.run(BancoApplication.class, args);
     }
 
-    /**
-     * Bean de exemplo para exibir uma mensagem inicial.
-     * Este método é opcional e pode ser removido se não for necessário.
-     */
-    @Bean
     public String mensagemInicial() {
         return "Bem-vindo ao Sistema Bancário!";
     }
